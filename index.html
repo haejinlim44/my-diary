@@ -9,7 +9,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@400;700&family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -19,6 +19,12 @@
         .font-handwriting {
             font-family: 'Nanum Pen Script', cursive !important;
             font-size: 1.35rem !important;
+        }
+        .font-myeongjo {
+            font-family: 'Nanum Myeongjo', serif !important;
+        }
+        .font-gowun {
+            font-family: 'Gowun Dodum', sans-serif !important;
         }
         input, textarea, select {
             font-size: 16px !important;
@@ -31,6 +37,16 @@
             scrollbar-width: none;
         }
         /* Theme Configurations */
+        body.theme-default {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        body.theme-default header, body.theme-default .theme-bg-card, body.theme-default .modal-card {
+            background-color: #ffffff;
+            color: #1e293b;
+            border-color: #e2e8f0;
+        }
+
         body.theme-dark {
             background-color: #0f172a;
             color: #f8fafc;
@@ -46,47 +62,57 @@
             border-color: #334155;
         }
 
-        body.theme-pastel {
-            background-color: #fdfbf7;
-            color: #4a403a;
+        body.theme-beige {
+            background-color: #fcf8f2;
+            color: #4a3e3d;
         }
-        body.theme-pastel header, body.theme-pastel .theme-bg-card, body.theme-pastel .modal-card {
-            background-color: #fff9f2;
-            color: #4a403a;
-            border-color: #f3e8de;
+        body.theme-beige header, body.theme-beige .theme-bg-card, body.theme-beige .modal-card {
+            background-color: #fffdfa;
+            color: #4a3e3d;
+            border-color: #f0e6d8;
+        }
+        body.theme-beige input, body.theme-beige textarea, body.theme-beige select {
+            background-color: #f9f3ea;
+            color: #4a3e3d;
+            border-color: #e6dace;
         }
 
-        body.theme-mono {
-            background-color: #f4f4f5;
-            color: #18181b;
+        body.theme-wood {
+            background-color: #2c221e;
+            color: #f1e7dd;
         }
-        body.theme-mono header, body.theme-mono .theme-bg-card, body.theme-mono .modal-card {
-            background-color: #ffffff;
-            color: #18181b;
-            border-color: #e4e4e7;
+        body.theme-wood header, body.theme-wood .theme-bg-card, body.theme-wood .modal-card {
+            background-color: #3d302a;
+            color: #f1e7dd;
+            border-color: #52423a;
+        }
+        body.theme-wood input, body.theme-wood textarea, body.theme-wood select {
+            background-color: #2c221e;
+            color: #f1e7dd;
+            border-color: #52423a;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Header -->
-    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex justify-between items-center max-w-lg mx-auto w-full">
-        <h1 class="text-xl font-bold flex items-center gap-2">
-            <i class="fa-solid fa-book-bookmark text-indigo-600"></i>
-            <span id="app-title">하루 기록</span>
+    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-slate-200 px-3 py-2.5 flex justify-between items-center max-w-lg mx-auto w-full">
+        <h1 class="text-xs sm:text-sm font-bold flex items-center gap-1 shrink-0 text-slate-700">
+            <i class="fa-solid fa-book-bookmark text-indigo-600 text-xs"></i>
+            <span id="app-title" class="tracking-tighter">하루 기록</span>
         </h1>
-        <div class="flex items-center gap-1.5">
-            <button onclick="switchTab('write')" id="tab-write-btn" class="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm">
-                <i class="fa-solid fa-pen-to-square"></i> 작성
+        <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
+            <button onclick="switchTab('write')" id="tab-write-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1">
+                <i class="fa-solid fa-pen-to-square text-[10px]"></i> 작성
             </button>
-            <button onclick="switchTab('list')" id="tab-list-btn" class="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
-                <i class="fa-solid fa-list-ul"></i> 목록 (<span id="diary-count">0</span>)
+            <button onclick="switchTab('list')" id="tab-list-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1">
+                <i class="fa-solid fa-list-ul text-[10px]"></i> 목록 (<span id="diary-count">0</span>)
             </button>
-            <button onclick="switchTab('calendar')" id="tab-cal-btn" class="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
-                <i class="fa-regular fa-calendar-days"></i> 달력
+            <button onclick="switchTab('calendar')" id="tab-cal-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1">
+                <i class="fa-regular fa-calendar-days text-[10px]"></i> 달력
             </button>
-            <button onclick="openSettings()" class="p-2 text-slate-500 hover:text-indigo-600 transition-colors ml-1" title="설정">
-                <i class="fa-solid fa-gear text-base"></i>
+            <button onclick="openSettings()" class="p-1.5 text-slate-500 hover:text-indigo-600 transition-colors shrink-0" title="설정">
+                <i class="fa-solid fa-gear text-xs"></i>
             </button>
         </div>
     </header>
@@ -149,7 +175,7 @@
             <div class="flex justify-between items-center px-1">
                 <span class="text-xs text-slate-500 font-medium">총 <b id="list-count">0</b>개의 일기</span>
                 <button onclick="exportAllDiaries()" class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 bg-indigo-50 px-2.5 py-1.5 rounded-lg border border-indigo-100">
-                    <i class="fa-solid fa-file-arrow-down"></i> 전체 내보내기 (.md)
+                    <i class="fa-solid fa-file-arrow-down"></i> 전체 내보내기 (.txt)
                 </button>
             </div>
             <div id="diary-container" class="space-y-3">
@@ -200,11 +226,11 @@
             <!-- Theme Picker -->
             <div class="space-y-2">
                 <label class="text-xs font-bold text-slate-500">🎨 테마 컬러</label>
-                <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setTheme('default')" class="p-2 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700">기본</button>
-                    <button onclick="setTheme('dark')" class="p-2 rounded-xl border text-xs font-semibold text-center border-slate-700 bg-slate-900 text-white">다크</button>
-                    <button onclick="setTheme('pastel')" class="p-2 rounded-xl border text-xs font-semibold text-center border-amber-200 bg-amber-50 text-amber-900">파스텔</button>
-                    <button onclick="setTheme('mono')" class="p-2 rounded-xl border text-xs font-semibold text-center border-zinc-300 bg-zinc-100 text-zinc-900">모노톤</button>
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" onclick="selectThemeOpt('default')" id="theme-btn-default" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700">기본 (블루)</button>
+                    <button type="button" onclick="selectThemeOpt('dark')" id="theme-btn-dark" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-700 bg-slate-900 text-white">다크</button>
+                    <button type="button" onclick="selectThemeOpt('beige')" id="theme-btn-beige" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-amber-200 bg-amber-50 text-amber-900">베이지</button>
+                    <button type="button" onclick="selectThemeOpt('wood')" id="theme-btn-wood" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-stone-700 bg-stone-800 text-amber-100">우드톤</button>
                 </div>
             </div>
 
@@ -212,8 +238,8 @@
             <div class="space-y-2">
                 <label class="text-xs font-bold text-slate-500">📐 목록 레이아웃</label>
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="setLayout('card')" id="layout-btn-card" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">카드형</button>
-                    <button onclick="setLayout('list')" id="layout-btn-list" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600">콤팩트 리스트</button>
+                    <button type="button" onclick="selectLayoutOpt('card')" id="layout-btn-card" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">카드형</button>
+                    <button type="button" onclick="selectLayoutOpt('list')" id="layout-btn-list" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600">콤팩트 리스트</button>
                 </div>
             </div>
 
@@ -221,14 +247,22 @@
             <div class="space-y-2">
                 <label class="text-xs font-bold text-slate-500">🖋️ 글꼴 스타일</label>
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="setFont('sans')" id="font-btn-sans" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">기본 산세리프</button>
-                    <button onclick="setFont('handwriting')" id="font-btn-handwriting" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-handwriting">나눔 손글씨</button>
+                    <button type="button" onclick="selectFontOpt('sans')" id="font-btn-sans" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">Noto Sans (고딕)</button>
+                    <button type="button" onclick="selectFontOpt('handwriting')" id="font-btn-handwriting" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-handwriting">나눔 손글씨</button>
+                    <button type="button" onclick="selectFontOpt('myeongjo')" id="font-btn-myeongjo" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-myeongjo">나눔 명조</button>
+                    <button type="button" onclick="selectFontOpt('gowun')" id="font-btn-gowun" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-gowun">고운 돋움</button>
                 </div>
             </div>
 
-            <button onclick="closeSettings()" class="w-full bg-slate-900 text-white py-2.5 rounded-xl font-bold text-xs shadow-md">
-                닫기
-            </button>
+            <!-- Modal Action Buttons: 적용 & 닫기 -->
+            <div class="flex gap-2 pt-2 border-t border-slate-100">
+                <button type="button" onclick="applyAndSaveSettings()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold text-xs shadow-md transition-all">
+                    적용하기
+                </button>
+                <button type="button" onclick="closeSettings()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl font-bold text-xs transition-all">
+                    닫기
+                </button>
+            </div>
         </div>
     </div>
 
@@ -248,6 +282,8 @@
         let diaries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         let userSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"theme":"default","layout":"card","font":"sans"}');
         
+        // Temp Settings state for modal selection
+        let tempSettings = { ...userSettings };
         let currentCalDate = new Date();
 
         // On Load Initializers
@@ -363,7 +399,10 @@
                 return;
             }
 
-            const fontClass = userSettings.font === 'handwriting' ? 'font-handwriting' : '';
+            let fontClass = '';
+            if (userSettings.font === 'handwriting') fontClass = 'font-handwriting';
+            else if (userSettings.font === 'myeongjo') fontClass = 'font-myeongjo';
+            else if (userSettings.font === 'gowun') fontClass = 'font-gowun';
 
             if (userSettings.layout === 'list') {
                 // Compact List View
@@ -372,14 +411,14 @@
                         <div class="flex items-center gap-2 overflow-hidden">
                             <span class="text-base">${item.mood.split(' ')[0]}</span>
                             <div class="truncate">
-                                <div class="text-xs font-bold text-slate-400">${item.date}</div>
+                                <div class="text-xs font-bold opacity-60">${item.date}</div>
                                 <div class="text-sm font-semibold truncate">${escapeHtml(item.highlight)}</div>
                             </div>
                         </div>
                         <div class="flex items-center gap-1 shrink-0 ml-2">
-                            <button onclick="copySingleDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-copy"></i></button>
-                            <button onclick="editDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <button onclick="deleteDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-rose-600"><i class="fa-regular fa-trash-can"></i></button>
+                            <button onclick="copySingleDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-indigo-600"><i class="fa-regular fa-copy"></i></button>
+                            <button onclick="editDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-indigo-600"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button onclick="deleteDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-rose-600"><i class="fa-regular fa-trash-can"></i></button>
                         </div>
                     </div>
                 `).join('');
@@ -390,18 +429,18 @@
                         <div class="flex justify-between items-start">
                             <div>
                                 <span class="inline-block px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 mb-1">${item.date}</span>
-                                <h3 class="font-bold text-base text-slate-900">${item.mood}</h3>
+                                <h3 class="font-bold text-base">${item.mood}</h3>
                             </div>
                             <div class="flex items-center gap-1">
-                                <button onclick="copySingleDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600 text-xs" title="복사"><i class="fa-regular fa-copy"></i></button>
-                                <button onclick="editDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600 text-xs" title="수정"><i class="fa-regular fa-pen-to-square"></i></button>
-                                <button onclick="deleteDiary('${item.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 text-xs" title="삭제"><i class="fa-regular fa-trash-can"></i></button>
+                                <button onclick="copySingleDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-xs" title="복사"><i class="fa-regular fa-copy"></i></button>
+                                <button onclick="editDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-xs" title="수정"><i class="fa-regular fa-pen-to-square"></i></button>
+                                <button onclick="deleteDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-rose-500 text-xs" title="삭제"><i class="fa-regular fa-trash-can"></i></button>
                             </div>
                         </div>
                         <div class="bg-indigo-50/50 p-2.5 rounded-xl border border-indigo-100/50 text-xs font-semibold text-indigo-950">
                             ⭐ ${escapeHtml(item.highlight)}
                         </div>
-                        <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-wrap">${escapeHtml(item.content)}</p>
+                        <p class="text-xs leading-relaxed whitespace-pre-wrap opacity-90">${escapeHtml(item.content)}</p>
                     </div>
                 `).join('');
             }
@@ -492,21 +531,22 @@
                 return;
             }
 
-            let exportText = `# 📖 나의 하루 다이어리 전체 기록\n\n`;
+            let exportText = `====================================\n   📖 나의 하루 다이어리 전체 기록\n====================================\n\n`;
             diaries.forEach((d, idx) => {
-                exportText += `## ${idx + 1}. ${d.date} (${d.mood})\n`;
-                exportText += `- **하이라이트:** ${d.highlight}\n\n`;
-                exportText += `${d.content}\n\n---\n\n`;
+                exportText += `[${idx + 1}] 날짜: ${d.date} (${d.mood})\n`;
+                exportText += `하이라이트: ${d.highlight}\n`;
+                exportText += `------------------------------------\n`;
+                exportText += `${d.content}\n\n====================================\n\n`;
             });
 
-            const blob = new Blob([exportText], { type: 'text/markdown;charset=utf-8;' });
+            const blob = new Blob([exportText], { type: 'text/plain;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `my-diaries-${new Date().toISOString().split('T')[0]}.md`;
+            link.download = `my-diaries-${new Date().toISOString().split('T')[0]}.txt`;
             link.click();
             URL.revokeObjectURL(link.href);
 
-            showToast('전체 일기 파일이 다운로드되었습니다.');
+            showToast('전체 일기 파일(.txt)이 다운로드되었습니다.');
         }
 
         function editDiary(id) {
@@ -548,6 +588,8 @@
 
         // Settings Modal Handlers
         function openSettings() {
+            tempSettings = { ...userSettings };
+            updateModalUI();
             const modal = document.getElementById('settings-modal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
         }
@@ -557,24 +599,66 @@
             modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
-        function setTheme(theme) {
-            userSettings.theme = theme;
-            saveSettings();
-            applySettings();
+        function selectThemeOpt(theme) {
+            tempSettings.theme = theme;
+            updateModalUI();
         }
 
-        function setLayout(layout) {
-            userSettings.layout = layout;
+        function selectLayoutOpt(layout) {
+            tempSettings.layout = layout;
+            updateModalUI();
+        }
+
+        function selectFontOpt(font) {
+            tempSettings.font = font;
+            updateModalUI();
+        }
+
+        function updateModalUI() {
+            const themes = ['default', 'dark', 'beige', 'wood'];
+            themes.forEach(t => {
+                const btn = document.getElementById(`theme-btn-${t}`);
+                if (btn) {
+                    if (tempSettings.theme === t) {
+                        btn.classList.add('ring-2', 'ring-indigo-600', 'ring-offset-1');
+                    } else {
+                        btn.classList.remove('ring-2', 'ring-indigo-600', 'ring-offset-1');
+                    }
+                }
+            });
+
+            const layouts = ['card', 'list'];
+            layouts.forEach(l => {
+                const btn = document.getElementById(`layout-btn-${l}`);
+                if (btn) {
+                    if (tempSettings.layout === l) {
+                        btn.className = "p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700 ring-2 ring-indigo-600 ring-offset-1";
+                    } else {
+                        btn.className = "p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600";
+                    }
+                }
+            });
+
+            const fonts = ['sans', 'handwriting', 'myeongjo', 'gowun'];
+            fonts.forEach(f => {
+                const btn = document.getElementById(`font-btn-${f}`);
+                if (btn) {
+                    if (tempSettings.font === f) {
+                        btn.classList.add('ring-2', 'ring-indigo-600', 'ring-offset-1');
+                    } else {
+                        btn.classList.remove('ring-2', 'ring-indigo-600', 'ring-offset-1');
+                    }
+                }
+            });
+        }
+
+        function applyAndSaveSettings() {
+            userSettings = { ...tempSettings };
             saveSettings();
             applySettings();
             renderList();
-        }
-
-        function setFont(font) {
-            userSettings.font = font;
-            saveSettings();
-            applySettings();
-            renderList();
+            closeSettings();
+            showToast('설정이 성공적으로 적용되었습니다.');
         }
 
         function saveSettings() {
@@ -582,7 +666,15 @@
         }
 
         function applySettings() {
-            document.body.className = `bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between theme-${userSettings.theme}`;
+            document.body.className = `antialiased min-h-screen flex flex-col justify-between theme-${userSettings.theme}`;
+            
+            let fontClass = '';
+            if (userSettings.font === 'handwriting') fontClass = 'font-handwriting';
+            else if (userSettings.font === 'myeongjo') fontClass = 'font-myeongjo';
+            else if (userSettings.font === 'gowun') fontClass = 'font-gowun';
+
+            document.body.classList.remove('font-handwriting', 'font-myeongjo', 'font-gowun');
+            if (fontClass) document.body.classList.add(fontClass);
         }
 
         function escapeHtml(str) {
