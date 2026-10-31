@@ -47,19 +47,20 @@
             border-color: #e2e8f0;
         }
 
+        /* 🌫️ Soft Gray (연한 그레이) */
         body.theme-dark {
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #e2e8f0;
+            color: #334155;
         }
         body.theme-dark header, body.theme-dark .theme-bg-card, body.theme-dark .modal-card {
-            background-color: #1e293b;
-            color: #f8fafc;
-            border-color: #334155;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-color: #cbd5e1;
         }
         body.theme-dark input, body.theme-dark textarea, body.theme-dark select {
-            background-color: #0f172a;
-            color: #f8fafc;
-            border-color: #334155;
+            background-color: #ffffff;
+            color: #1e293b;
+            border-color: #cbd5e1;
         }
 
         body.theme-beige {
@@ -129,11 +130,11 @@
                 <!-- Date & Mood Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">📅 날짜 (필수)</label>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">📅 날짜</label>
                         <input type="date" id="entry-date" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 mb-1">🎭 오늘의 기분 (필수)</label>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">🎭 오늘의 기분</label>
                         <select id="entry-mood" required class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                             <option value="😊 기분 좋음">😊 기분 좋음</option>
                             <option value="🔥 열정/의욕">🔥 열정/의욕</option>
@@ -149,13 +150,13 @@
 
                 <!-- Highlight Input -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">⭐ 오늘의 하이라이트 (한 줄 요약)</label>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">⭐ 오늘의 하이라이트</label>
                     <input type="text" id="entry-highlight" required placeholder="오늘 하루를 대표하는 한 줄" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
                 </div>
 
                 <!-- Main Content Input -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 mb-1">📝 상세 내용 (필수)</label>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">📝 기록하기</label>
                     <textarea id="entry-content" required rows="6" placeholder="오늘 어떤 일이 있었나요? 자유롭게 텍스트로 기록해보세요..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none"></textarea>
                 </div>
 
@@ -229,7 +230,7 @@
                 <label class="text-xs font-bold text-slate-500">🎨 테마 컬러</label>
                 <div class="grid grid-cols-2 gap-2">
                     <button type="button" onclick="selectThemeOpt('default')" id="theme-btn-default" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700">기본 (블루)</button>
-                    <button type="button" onclick="selectThemeOpt('dark')" id="theme-btn-dark" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-700 bg-slate-900 text-white">다크</button>
+                    <button type="button" onclick="selectThemeOpt('dark')" id="theme-btn-dark" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-400 bg-slate-200 text-slate-800">그레이</button>
                     <button type="button" onclick="selectThemeOpt('beige')" id="theme-btn-beige" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-amber-200 bg-amber-50 text-amber-900">베이지</button>
                     <button type="button" onclick="selectThemeOpt('pink')" id="theme-btn-pink" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-rose-200 bg-pink-50 text-rose-900">연한 핑크</button>
                 </div>
@@ -239,361 +240,92 @@
             <div class="space-y-2">
                 <label class="text-xs font-bold text-slate-500">📐 목록 레이아웃</label>
                 <div class="grid grid-cols-2 gap-2">
-                    <button type="button" onclick="selectLayoutOpt('card')" id="layout-btn-card" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">카드형</button>
-                    <button type="button" onclick="selectLayoutOpt('list')" id="layout-btn-list" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600">콤팩트 리스트</button>
+                    <button type="button" onclick="selectLayoutOpt('card')" id="layout-btn-card" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700">🃏 카드형</button>
+                    <button type="button" onclick="selectLayoutOpt('list')" id="layout-btn-list" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-200 bg-slate-50 text-slate-600">📋 리스트형</button>
                 </div>
             </div>
 
             <!-- Font Picker -->
             <div class="space-y-2">
-                <label class="text-xs font-bold text-slate-500">🖋️ 글꼴 스타일</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <button type="button" onclick="selectFontOpt('sans')" id="font-btn-sans" class="p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700">Noto Sans (고딕)</button>
-                    <button type="button" onclick="selectFontOpt('handwriting')" id="font-btn-handwriting" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-handwriting">나눔 손글씨</button>
-                    <button type="button" onclick="selectFontOpt('myeongjo')" id="font-btn-myeongjo" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-myeongjo">나눔 명조</button>
-                    <button type="button" onclick="selectFontOpt('gowun')" id="font-btn-gowun" class="p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600 font-gowun">고운 돋움</button>
-                </div>
+                <label class="text-xs font-bold text-slate-500">🔤 서체 (폰트)</label>
+                <select id="setting-font-select" onchange="previewFontOpt(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:ring-2 focus:ring-indigo-500 outline-none">
+                    <option value="sans">기본 고딕 (Noto Sans)</option>
+                    <option value="handwriting">나눔손글씨 펜</option>
+                    <option value="myeongjo">나눔명조 (아날로그 책)</option>
+                    <option value="gowun">고운돋움 (부드러운 고딕)</option>
+                </select>
             </div>
 
-            <!-- Modal Action Buttons: 적용 & 닫기 -->
-            <div class="flex gap-2 pt-2 border-t border-slate-100">
-                <button type="button" onclick="applyAndSaveSettings()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-xl font-bold text-xs shadow-md transition-all">
-                    적용하기
+            <!-- Modal Actions -->
+            <div class="pt-3 flex gap-2 border-t border-slate-100">
+                <button type="button" onclick="saveSettings()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-4 rounded-xl shadow-md text-xs transition-all flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-check"></i> 적용하기
                 </button>
-                <button type="button" onclick="closeSettings()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-600 py-2.5 rounded-xl font-bold text-xs transition-all">
+                <button type="button" onclick="closeSettings()" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 font-semibold rounded-xl text-xs transition-all">
                     닫기
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Global Toast Notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-full shadow-xl flex items-center gap-2 opacity-0 pointer-events-none transition-all duration-300 z-50">
-        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
-        <span id="toast-message">저장되었습니다.</span>
-    </div>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col gap-2"></div>
 
     <!-- JavaScript Logic -->
     <script>
-        // Storage Keys
-        const STORAGE_KEY = 'my_daily_diaries_v1';
-        const SETTINGS_KEY = 'my_diary_settings_v1';
-
-        // Initial State
-        let diaries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        let userSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"theme":"default","layout":"card","font":"sans"}');
+        // Data & State Management
+        let diaries = JSON.parse(localStorage.getItem('my_diaries_data') || '[]');
+        let currentTab = 'write';
+        let calCurrentDate = new Date();
         
-        // Temp Settings state for modal selection
-        let tempSettings = { ...userSettings };
-        let currentCalDate = new Date();
+        let appSettings = JSON.parse(localStorage.getItem('my_diaries_settings') || JSON.stringify({
+            theme: 'default',
+            layout: 'card',
+            font: 'sans'
+        }));
 
-        // On Load Initializers
+        let tempSettings = { ...appSettings };
+
+        // DOM Initialization
         document.addEventListener('DOMContentLoaded', () => {
             const dateInput = document.getElementById('entry-date');
             if (dateInput) {
                 dateInput.value = new Date().toISOString().split('T')[0];
             }
-            applySettings();
-            updateDiaryCount();
+            applySettings(appSettings);
+            renderDiaryList();
             renderCalendar();
+            updateCount();
         });
 
-        // Form Submission (Create or Update)
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            
-            const id = document.getElementById('entry-id').value;
-            const date = document.getElementById('entry-date').value;
-            const mood = document.getElementById('entry-mood').value;
-            const highlight = document.getElementById('entry-highlight').value.trim();
-            const content = document.getElementById('entry-content').value.trim();
+        // Tab Switcher
+        function switchTab(tabName) {
+            currentTab = tabName;
+            document.getElementById('view-write').classList.toggle('hidden', tabName !== 'write');
+            document.getElementById('view-list').classList.toggle('hidden', tabName !== 'list');
+            document.getElementById('view-calendar').classList.toggle('hidden', tabName !== 'calendar');
 
-            if (!date || !highlight || !content) {
-                showToast('필수 항목을 모두 입력해주세요.', 'error');
-                return;
-            }
+            document.getElementById('tab-write-btn').className = tabName === 'write' 
+                ? "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5"
+                : "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5";
 
-            if (id) {
-                const index = diaries.findIndex(d => d.id === id);
-                if (index !== -1) {
-                    diaries[index] = { id, date, mood, highlight, content, updatedAt: new Date().toISOString() };
-                    showToast('일기가 수정되었습니다!');
-                }
-            } else {
-                const newEntry = {
-                    id: 'diary_' + Date.now(),
-                    date,
-                    mood,
-                    highlight,
-                    content,
-                    createdAt: new Date().toISOString()
-                };
-                diaries.unshift(newEntry);
-                showToast('일기가 저장되었습니다!');
-            }
+            document.getElementById('tab-list-btn').className = tabName === 'list' 
+                ? "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5"
+                : "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5";
 
-            saveToStorage();
-            updateDiaryCount();
-            resetForm();
-            switchTab('list');
-        }
+            document.getElementById('tab-cal-btn').className = tabName === 'calendar' 
+                ? "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5"
+                : "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5";
 
-        function resetForm() {
-            document.getElementById('entry-id').value = '';
-            document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
-            document.getElementById('entry-mood').value = '😊 기분 좋음';
-            document.getElementById('entry-highlight').value = '';
-            document.getElementById('entry-content').value = '';
-            document.getElementById('save-btn-text').innerText = '일기 저장하기';
-        }
-
-        function saveToStorage() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(diaries));
-        }
-
-        function updateDiaryCount() {
-            document.getElementById('diary-count').innerText = diaries.length;
-            document.getElementById('list-count').innerText = diaries.length;
-        }
-
-        // Tab Switching JS
-        function switchTab(tab) {
-            const viewWrite = document.getElementById('view-write');
-            const viewList = document.getElementById('view-list');
-            const viewCal = document.getElementById('view-calendar');
-
-            const btnWrite = document.getElementById('tab-write-btn');
-            const btnList = document.getElementById('tab-list-btn');
-            const btnCal = document.getElementById('tab-cal-btn');
-
-            viewWrite.classList.add('hidden');
-            viewList.classList.add('hidden');
-            viewCal.classList.add('hidden');
-
-            const inactiveClass = "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5";
-            const activeClass = "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5";
-
-            btnWrite.className = inactiveClass;
-            btnList.className = inactiveClass;
-            btnCal.className = inactiveClass;
-
-            if (tab === 'write') {
-                viewWrite.classList.remove('hidden');
-                btnWrite.className = activeClass;
-            } else if (tab === 'list') {
-                viewList.classList.remove('hidden');
-                btnList.className = activeClass;
-                renderList();
-            } else if (tab === 'calendar') {
-                viewCal.classList.remove('hidden');
-                btnCal.className = activeClass;
+            if (tabName === 'calendar') {
                 renderCalendar();
             }
         }
 
-        // Render List View
-        function renderList() {
-            const container = document.getElementById('diary-container');
-            if (diaries.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-12 text-slate-400 theme-bg-card bg-white rounded-2xl border border-slate-200/80">
-                        <i class="fa-regular fa-folder-open text-3xl mb-2"></i>
-                        <p class="text-xs">작성된 일기가 없습니다.<br>첫 일기를 작성해 보세요!</p>
-                    </div>`;
-                return;
-            }
-
-            let fontClass = '';
-            if (userSettings.font === 'handwriting') fontClass = 'font-handwriting';
-            else if (userSettings.font === 'myeongjo') fontClass = 'font-myeongjo';
-            else if (userSettings.font === 'gowun') fontClass = 'font-gowun';
-
-            if (userSettings.layout === 'list') {
-                // Compact List View
-                container.innerHTML = diaries.map(item => `
-                    <div class="theme-bg-card bg-white p-3 rounded-xl border border-slate-200/80 shadow-sm flex justify-between items-center ${fontClass}">
-                        <div class="flex items-center gap-2 overflow-hidden">
-                            <span class="text-base">${item.mood.split(' ')[0]}</span>
-                            <div class="truncate">
-                                <div class="text-xs font-bold opacity-60">${item.date}</div>
-                                <div class="text-sm font-semibold truncate">${escapeHtml(item.highlight)}</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-1 shrink-0 ml-2">
-                            <button onclick="copySingleDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-indigo-600"><i class="fa-regular fa-copy"></i></button>
-                            <button onclick="editDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-indigo-600"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <button onclick="deleteDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 hover:text-rose-600"><i class="fa-regular fa-trash-can"></i></button>
-                        </div>
-                    </div>
-                `).join('');
-            } else {
-                // Detailed Card View
-                container.innerHTML = diaries.map(item => `
-                    <div class="theme-bg-card bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm space-y-3 ${fontClass}">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <span class="inline-block px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600 mb-1">${item.date}</span>
-                                <h3 class="font-bold text-base">${item.mood}</h3>
-                            </div>
-                            <div class="flex items-center gap-1">
-                                <button onclick="copySingleDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-xs" title="복사"><i class="fa-regular fa-copy"></i></button>
-                                <button onclick="editDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-xs" title="수정"><i class="fa-regular fa-pen-to-square"></i></button>
-                                <button onclick="deleteDiary('${item.id}')" class="p-1.5 opacity-60 hover:opacity-100 text-rose-500 text-xs" title="삭제"><i class="fa-regular fa-trash-can"></i></button>
-                            </div>
-                        </div>
-                        <div class="bg-indigo-50/50 p-2.5 rounded-xl border border-indigo-100/50 text-xs font-semibold text-indigo-950">
-                            ⭐ ${escapeHtml(item.highlight)}
-                        </div>
-                        <p class="text-xs leading-relaxed whitespace-pre-wrap opacity-90">${escapeHtml(item.content)}</p>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Render Calendar View
-        function renderCalendar() {
-            const year = currentCalDate.getFullYear();
-            const month = currentCalDate.getMonth();
-
-            document.getElementById('cal-month-year').innerText = `${year}년 ${month + 1}월`;
-
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-
-            const grid = document.getElementById('cal-days-grid');
-            grid.innerHTML = '';
-
-            // Empty slots for previous month
-            for (let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div class="p-2 text-slate-300"></div>`;
-            }
-
-            // Days of current month
-            for (let day = 1; day <= lastDate; day++) {
-                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                const entry = diaries.find(d => d.date === dateStr);
-
-                const hasEntry = Boolean(entry);
-                const emoji = hasEntry ? entry.mood.split(' ')[0] : '';
-
-                grid.innerHTML += `
-                    <div onclick="selectCalendarDate('${dateStr}')" class="p-1.5 min-h-[44px] rounded-xl border border-slate-100 flex flex-col items-center justify-between cursor-pointer hover:bg-indigo-50/50 ${hasEntry ? 'bg-indigo-50/30 border-indigo-200' : ''}">
-                        <span class="font-semibold text-slate-600">${day}</span>
-                        <span class="text-xs">${emoji}</span>
-                    </div>
-                `;
-            }
-        }
-
-        function changeMonth(delta) {
-            currentCalDate.setMonth(currentCalDate.getMonth() + delta);
-            renderCalendar();
-        }
-
-        function selectCalendarDate(dateStr) {
-            const entry = diaries.find(d => d.date === dateStr);
-            const container = document.getElementById('cal-selected-entry');
-            container.classList.remove('hidden');
-
-            if (!entry) {
-                container.innerHTML = `
-                    <div class="theme-bg-card bg-white p-4 rounded-xl border border-slate-200 text-center text-xs text-slate-400">
-                        ${dateStr} 에 작성된 일기가 없습니다.
-                    </div>`;
-                return;
-            }
-
-            container.innerHTML = `
-                <div class="theme-bg-card bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
-                    <div class="text-xs text-slate-400 font-bold">${entry.date} - ${entry.mood}</div>
-                    <div class="text-sm font-bold text-indigo-900">⭐ ${escapeHtml(entry.highlight)}</div>
-                    <div class="text-xs text-slate-600 whitespace-pre-wrap">${escapeHtml(entry.content)}</div>
-                </div>
-            `;
-        }
-
-        // Actions: Copy, Edit, Delete
-        function copySingleDiary(id) {
-            const item = diaries.find(d => d.id === id);
-            if (!item) return;
-
-            const formattedText = `📅 날짜: ${item.date}\n🎭 기분: ${item.mood}\n⭐ 하이라이트: ${item.highlight}\n\n📝 내용:\n${item.content}`;
-            
-            const textarea = document.createElement('textarea');
-            textarea.value = formattedText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            showToast('클립보드에 복사되었습니다!');
-        }
-
-        function exportAllDiaries() {
-            if (diaries.length === 0) {
-                showToast('내보낼 일기가 없습니다.', 'error');
-                return;
-            }
-
-            let exportText = `====================================\n   📖 나의 하루 다이어리 전체 기록\n====================================\n\n`;
-            diaries.forEach((d, idx) => {
-                exportText += `[${idx + 1}] 날짜: ${d.date} (${d.mood})\n`;
-                exportText += `하이라이트: ${d.highlight}\n`;
-                exportText += `------------------------------------\n`;
-                exportText += `${d.content}\n\n====================================\n\n`;
-            });
-
-            const blob = new Blob([exportText], { type: 'text/plain;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `my-diaries-${new Date().toISOString().split('T')[0]}.txt`;
-            link.click();
-            URL.revokeObjectURL(link.href);
-
-            showToast('전체 일기 파일(.txt)이 다운로드되었습니다.');
-        }
-
-        function editDiary(id) {
-            const item = diaries.find(d => d.id === id);
-            if (!item) return;
-
-            document.getElementById('entry-id').value = item.id;
-            document.getElementById('entry-date').value = item.date;
-            document.getElementById('entry-mood').value = item.mood;
-            document.getElementById('entry-highlight').value = item.highlight;
-            document.getElementById('entry-content').value = item.content;
-            document.getElementById('save-btn-text').innerText = '일기 수정 완료';
-
-            switchTab('write');
-        }
-
-        function deleteDiary(id) {
-            diaries = diaries.filter(d => d.id !== id);
-            saveToStorage();
-            updateDiaryCount();
-            renderList();
-            showToast('일기가 삭제되었습니다.');
-        }
-
-        // Toast Notification
-        function showToast(msg, type = 'success') {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toast-message');
-            const toastIcon = document.getElementById('toast-icon');
-
-            toastMsg.innerText = msg;
-            toastIcon.className = type === 'error' ? 'fa-solid fa-triangle-exclamation text-rose-400' : 'fa-solid fa-circle-check text-emerald-400';
-
-            toast.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 2500);
-        }
-
         // Settings Modal Handlers
         function openSettings() {
-            tempSettings = { ...userSettings };
-            updateModalUI();
+            tempSettings = { ...appSettings };
+            updateSettingsUI(tempSettings);
             const modal = document.getElementById('settings-modal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
         }
@@ -601,29 +333,31 @@
         function closeSettings() {
             const modal = document.getElementById('settings-modal');
             modal.classList.add('opacity-0', 'pointer-events-none');
+            applySettings(appSettings); // Revert to saved settings
         }
 
-        function selectThemeOpt(theme) {
-            tempSettings.theme = theme;
-            updateModalUI();
+        function selectThemeOpt(themeName) {
+            tempSettings.theme = themeName;
+            updateSettingsUI(tempSettings);
+            applyThemeClass(themeName);
         }
 
-        function selectLayoutOpt(layout) {
-            tempSettings.layout = layout;
-            updateModalUI();
+        function selectLayoutOpt(layoutType) {
+            tempSettings.layout = layoutType;
+            updateSettingsUI(tempSettings);
         }
 
-        function selectFontOpt(font) {
-            tempSettings.font = font;
-            updateModalUI();
+        function previewFontOpt(fontClass) {
+            tempSettings.font = fontClass;
+            applyFontClass(fontClass);
         }
 
-        function updateModalUI() {
+        function updateSettingsUI(settings) {
             const themes = ['default', 'dark', 'beige', 'pink'];
             themes.forEach(t => {
                 const btn = document.getElementById(`theme-btn-${t}`);
                 if (btn) {
-                    if (tempSettings.theme === t) {
+                    if (t === settings.theme) {
                         btn.classList.add('ring-2', 'ring-indigo-600', 'ring-offset-1');
                     } else {
                         btn.classList.remove('ring-2', 'ring-indigo-600', 'ring-offset-1');
@@ -631,58 +365,319 @@
                 }
             });
 
-            const layouts = ['card', 'list'];
-            layouts.forEach(l => {
-                const btn = document.getElementById(`layout-btn-${l}`);
-                if (btn) {
-                    if (tempSettings.layout === l) {
-                        btn.className = "p-2 rounded-xl border text-xs font-semibold text-center bg-indigo-50 border-indigo-500 text-indigo-700 ring-2 ring-indigo-600 ring-offset-1";
-                    } else {
-                        btn.className = "p-2 rounded-xl border text-xs font-semibold text-center bg-slate-50 border-slate-200 text-slate-600";
-                    }
+            const cardBtn = document.getElementById('layout-btn-card');
+            const listBtn = document.getElementById('layout-btn-list');
+            if (cardBtn && listBtn) {
+                if (settings.layout === 'card') {
+                    cardBtn.className = "p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-500 ring-offset-1";
+                    listBtn.className = "p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-200 bg-slate-50 text-slate-600";
+                } else {
+                    listBtn.className = "p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700 ring-2 ring-indigo-500 ring-offset-1";
+                    cardBtn.className = "p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-200 bg-slate-50 text-slate-600";
                 }
-            });
+            }
 
-            const fonts = ['sans', 'handwriting', 'myeongjo', 'gowun'];
-            fonts.forEach(f => {
-                const btn = document.getElementById(`font-btn-${f}`);
-                if (btn) {
-                    if (tempSettings.font === f) {
-                        btn.classList.add('ring-2', 'ring-indigo-600', 'ring-offset-1');
-                    } else {
-                        btn.classList.remove('ring-2', 'ring-indigo-600', 'ring-offset-1');
-                    }
-                }
-            });
-        }
-
-        function applyAndSaveSettings() {
-            userSettings = { ...tempSettings };
-            saveSettings();
-            applySettings();
-            renderList();
-            closeSettings();
-            showToast('설정이 성공적으로 적용되었습니다.');
+            const fontSelect = document.getElementById('setting-font-select');
+            if (fontSelect) fontSelect.value = settings.font;
         }
 
         function saveSettings() {
-            localStorage.setItem(SETTINGS_KEY, JSON.stringify(userSettings));
+            appSettings = { ...tempSettings };
+            localStorage.setItem('my_diaries_settings', JSON.stringify(appSettings));
+            applySettings(appSettings);
+            renderDiaryList();
+            closeSettings();
+            showToast("⚙️ 설정이 적용되었습니다.");
         }
 
-        function applySettings() {
-            document.body.className = `antialiased min-h-screen flex flex-col justify-between theme-${userSettings.theme}`;
-            
-            let fontClass = '';
-            if (userSettings.font === 'handwriting') fontClass = 'font-handwriting';
-            else if (userSettings.font === 'myeongjo') fontClass = 'font-myeongjo';
-            else if (userSettings.font === 'gowun') fontClass = 'font-gowun';
+        function applySettings(settings) {
+            applyThemeClass(settings.theme);
+            applyFontClass(settings.font);
+        }
 
+        function applyThemeClass(theme) {
+            document.body.className = document.body.className.replace(/theme-\S+/g, '');
+            document.body.classList.add(`theme-${theme}`);
+        }
+
+        function applyFontClass(font) {
             document.body.classList.remove('font-handwriting', 'font-myeongjo', 'font-gowun');
-            if (fontClass) document.body.classList.add(fontClass);
+            if (font === 'handwriting') document.body.classList.add('font-handwriting');
+            if (font === 'myeongjo') document.body.classList.add('font-myeongjo');
+            if (font === 'gowun') document.body.classList.add('font-gowun');
         }
 
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        // Form Submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const id = document.getElementById('entry-id').value;
+            const date = document.getElementById('entry-date').value;
+            const mood = document.getElementById('entry-mood').value;
+            const highlight = document.getElementById('entry-highlight').value.trim();
+            const content = document.getElementById('entry-content').value.trim();
+
+            if (id) {
+                const idx = diaries.findIndex(d => d.id === id);
+                if (idx !== -1) {
+                    diaries[idx] = { ...diaries[idx], date, mood, highlight, content, updatedAt: new Date().toISOString() };
+                    showToast('✏️ 일기가 수정되었습니다.');
+                }
+            } else {
+                const newEntry = {
+                    id: Date.now().toString(),
+                    date,
+                    mood,
+                    highlight,
+                    content,
+                    createdAt: new Date().toISOString()
+                };
+                diaries.unshift(newEntry);
+                showToast('✅ 새 일기가 저장되었습니다.');
+            }
+
+            localStorage.setItem('my_diaries_data', JSON.stringify(diaries));
+            resetForm();
+            renderDiaryList();
+            updateCount();
+            switchTab('list');
+        }
+
+        function resetForm() {
+            document.getElementById('entry-id').value = '';
+            document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('entry-mood').selectedIndex = 0;
+            document.getElementById('entry-highlight').value = '';
+            document.getElementById('entry-content').value = '';
+            document.getElementById('save-btn-text').innerText = '일기 저장하기';
+        }
+
+        function editEntry(id) {
+            const item = diaries.find(d => d.id === id);
+            if (!item) return;
+            document.getElementById('entry-id').value = item.id;
+            document.getElementById('entry-date').value = item.date;
+            document.getElementById('entry-mood').value = item.mood;
+            document.getElementById('entry-highlight').value = item.highlight;
+            document.getElementById('entry-content').value = item.content;
+            document.getElementById('save-btn-text').innerText = '수정 완료하기';
+            switchTab('write');
+        }
+
+        function deleteEntry(id) {
+            if (confirm('정말로 이 일기를 삭제하시겠습니까?')) {
+                diaries = diaries.filter(d => d.id !== id);
+                localStorage.setItem('my_diaries_data', JSON.stringify(diaries));
+                renderDiaryList();
+                renderCalendar();
+                updateCount();
+                showToast('🗑️ 일기가 삭제되었습니다.');
+            }
+        }
+
+        // Render Functions
+        function renderDiaryList() {
+            const container = document.getElementById('diary-container');
+            if (diaries.length === 0) {
+                container.innerHTML = `
+                    <div class="theme-bg-card bg-white p-8 rounded-2xl border border-slate-200/80 text-center space-y-3">
+                        <i class="fa-regular fa-folder-open text-3xl text-slate-300"></i>
+                        <p class="text-sm font-medium text-slate-500">아직 저장된 일기가 없습니다.<br>오늘의 첫 일기를 남겨보세요!</p>
+                        <button onclick="switchTab('write')" class="inline-block text-xs bg-indigo-600 text-white px-3.5 py-2 rounded-xl font-bold shadow-sm">일기 쓰러 가기</button>
+                    </div>`;
+                return;
+            }
+
+            const isCompact = appSettings.layout === 'list';
+
+            if (isCompact) {
+                container.innerHTML = diaries.map(item => `
+                    <div class="theme-bg-card bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-sm flex justify-between items-center gap-3">
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center gap-2 mb-0.5">
+                                <span class="text-xs font-bold text-slate-400">${item.date}</span>
+                                <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100">${item.mood.split(' ')[0]}</span>
+                            </div>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-800 truncate">${escapeHtml(item.highlight)}</h4>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button onclick="copyToClipboard('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-copy text-sm"></i></button>
+                            <button onclick="editEntry('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600"><i class="fa-regular fa-pen-to-square text-sm"></i></button>
+                            <button onclick="deleteEntry('${item.id}')" class="p-1.5 text-slate-400 hover:text-rose-600"><i class="fa-regular fa-trash-can text-sm"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = diaries.map(item => `
+                    <article class="theme-bg-card bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                        <div class="flex justify-between items-start border-b border-slate-100 pb-2.5">
+                            <div>
+                                <span class="text-xs font-bold text-slate-400 block">${item.date}</span>
+                                <span class="inline-block mt-1 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-100">${escapeHtml(item.mood)}</span>
+                            </div>
+                            <div class="flex gap-1">
+                                <button onclick="copyToClipboard('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-50 transition-colors" title="복사">
+                                    <i class="fa-regular fa-copy text-sm"></i>
+                                </button>
+                                <button onclick="editEntry('${item.id}')" class="p-1.5 text-slate-400 hover:text-indigo-600 rounded-lg hover:bg-slate-50 transition-colors" title="수정">
+                                    <i class="fa-regular fa-pen-to-square text-sm"></i>
+                                </button>
+                                <button onclick="deleteEntry('${item.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-50 transition-colors" title="삭제">
+                                    <i class="fa-regular fa-trash-can text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm sm:text-base text-slate-800 mb-1.5">⭐ ${escapeHtml(item.highlight)}</h3>
+                            <p class="text-xs sm:text-sm text-slate-600 whitespace-pre-wrap leading-relaxed">${escapeHtml(item.content)}</p>
+                        </div>
+                    </article>
+                `).join('');
+            }
+        }
+
+        // Calendar Render
+        function renderCalendar() {
+            const year = calCurrentDate.getFullYear();
+            const month = calCurrentDate.getMonth();
+
+            document.getElementById('cal-month-year').innerText = `${year}년 ${month + 1}월`;
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
+
+            const grid = document.getElementById('cal-days-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < firstDay; i++) {
+                grid.innerHTML += `<div class="h-10"></div>`;
+            }
+
+            for (let day = 1; day <= totalDays; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const entry = diaries.find(d => d.date === dateStr);
+                const emoji = entry ? entry.mood.split(' ')[0] : '';
+
+                grid.innerHTML += `
+                    <button onclick="selectCalDate('${dateStr}')" class="h-10 border border-slate-100 rounded-xl flex flex-col items-center justify-center relative hover:bg-indigo-50 transition-colors ${entry ? 'bg-indigo-50/50 font-bold' : ''}">
+                        <span class="text-[11px] ${entry ? 'text-indigo-600 font-extrabold' : 'text-slate-600'}">${day}</span>
+                        ${emoji ? `<span class="text-xs leading-none">${emoji}</span>` : ''}
+                    </button>
+                `;
+            }
+        }
+
+        function changeMonth(delta) {
+            calCurrentDate.setMonth(calCurrentDate.getMonth() + delta);
+            renderCalendar();
+            document.getElementById('cal-selected-entry').classList.add('hidden');
+        }
+
+        function selectCalDate(dateStr) {
+            const entry = diaries.find(d => d.date === dateStr);
+            const container = document.getElementById('cal-selected-entry');
+
+            if (!entry) {
+                container.innerHTML = `
+                    <div class="theme-bg-card bg-white p-4 rounded-xl border border-slate-200 text-center space-y-2">
+                        <p class="text-xs font-semibold text-slate-500">${dateStr}에는 작성된 일기가 없습니다.</p>
+                        <button onclick="createOnDate('${dateStr}')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-bold">이 날짜에 일기쓰기</button>
+                    </div>`;
+            } else {
+                container.innerHTML = `
+                    <div class="theme-bg-card bg-white p-4 rounded-xl border border-slate-200 space-y-2">
+                        <div class="flex justify-between items-center border-b pb-2 border-slate-100">
+                            <span class="text-xs font-bold text-slate-400">${entry.date} (${entry.mood})</span>
+                            <div class="flex gap-2">
+                                <button onclick="editEntry('${entry.id}')" class="text-xs font-bold text-indigo-600">수정</button>
+                                <button onclick="deleteEntry('${entry.id}')" class="text-xs font-bold text-rose-500">삭제</button>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-xs sm:text-sm text-slate-800">⭐ ${escapeHtml(entry.highlight)}</h4>
+                        <p class="text-xs text-slate-600 whitespace-pre-wrap">${escapeHtml(entry.content)}</p>
+                    </div>`;
+            }
+            container.classList.remove('hidden');
+        }
+
+        function createOnDate(dateStr) {
+            resetForm();
+            document.getElementById('entry-date').value = dateStr;
+            switchTab('write');
+        }
+
+        // Export & Copy Helpers
+        function copyToClipboard(id) {
+            const item = diaries.find(d => d.id === id);
+            if (!item) return;
+
+            const text = `📅 날짜: ${item.date}\n🎭 기분: ${item.mood}\n⭐ 하이라이트: ${item.highlight}\n📝 기록하기:\n${item.content}`;
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('📋 일기 내용이 클립보드에 복사되었습니다.');
+            } catch (err) {
+                showToast('❌ 복사에 실패했습니다.');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function exportAllDiaries() {
+            if (diaries.length === 0) {
+                showToast('⚠️ 내보낼 일기가 없습니다.');
+                return;
+            }
+
+            let fileContent = `# 📖 나의 하루 다이어리 전체 백업\n생성일시: ${new Date().toLocaleString()}\n\n---\n\n`;
+            diaries.forEach((item, index) => {
+                fileContent += `## ${index + 1}. ${item.date} (${item.mood})\n`;
+                fileContent += `**하이라이트:** ${item.highlight}\n\n`;
+                fileContent += `**기록하기:**\n${item.content}\n\n`;
+                fileContent += `---\n\n`;
+            });
+
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `diary_backup_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('💾 텍스트 파일(.txt)로 내보내기가 완료되었습니다.');
+        }
+
+        function updateCount() {
+            const count = diaries.length;
+            document.getElementById('diary-count').innerText = count;
+            document.getElementById('list-count').innerText = count;
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg border border-slate-700 opacity-90 transition-all duration-300 transform translate-y-2';
+            toast.innerText = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         }
     </script>
 </body>
