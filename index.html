@@ -77,42 +77,43 @@
             border-color: #e6dace;
         }
 
-        body.theme-wood {
-            background-color: #2c221e;
-            color: #f1e7dd;
+        /* 🌸 Soft Pink (연한 핑크) */
+        body.theme-pink {
+            background-color: #fff0f3;
+            color: #5c3a42;
         }
-        body.theme-wood header, body.theme-wood .theme-bg-card, body.theme-wood .modal-card {
-            background-color: #3d302a;
-            color: #f1e7dd;
-            border-color: #52423a;
+        body.theme-pink header, body.theme-pink .theme-bg-card, body.theme-pink .modal-card {
+            background-color: #ffffff;
+            color: #5c3a42;
+            border-color: #ffe3e8;
         }
-        body.theme-wood input, body.theme-wood textarea, body.theme-wood select {
-            background-color: #2c221e;
-            color: #f1e7dd;
-            border-color: #52423a;
+        body.theme-pink input, body.theme-pink textarea, body.theme-pink select {
+            background-color: #fff8f9;
+            color: #5c3a42;
+            border-color: #ffd1dc;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Header -->
-    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-slate-200 px-3 py-2.5 flex justify-between items-center max-w-lg mx-auto w-full">
-        <h1 class="text-xs sm:text-sm font-bold flex items-center gap-1 shrink-0 text-slate-700">
-            <i class="fa-solid fa-book-bookmark text-indigo-600 text-xs"></i>
-            <span id="app-title" class="tracking-tighter">하루 기록</span>
+    <header class="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3.5 py-3 flex justify-between items-center max-w-lg mx-auto w-full">
+        <h1 class="text-sm sm:text-base font-extrabold flex items-center gap-1.5 shrink-0 text-slate-800">
+            <i class="fa-solid fa-book-bookmark text-indigo-600 text-sm"></i>
+            <span id="app-title" class="tracking-tight">하루 기록</span>
         </h1>
-        <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
-            <button onclick="switchTab('write')" id="tab-write-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1">
-                <i class="fa-solid fa-pen-to-square text-[10px]"></i> 작성
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            <button onclick="switchTab('write')" id="tab-write-btn" class="px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5">
+                <i class="fa-solid fa-pen-to-square text-xs"></i> 작성
             </button>
-            <button onclick="switchTab('list')" id="tab-list-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1">
-                <i class="fa-solid fa-list-ul text-[10px]"></i> 목록 (<span id="diary-count">0</span>)
+            <button onclick="switchTab('list')" id="tab-list-btn" class="px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5">
+                <i class="fa-solid fa-list-ul text-xs"></i> 목록 (<span id="diary-count">0</span>)
             </button>
-            <button onclick="switchTab('calendar')" id="tab-cal-btn" class="px-2 py-1 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1">
-                <i class="fa-regular fa-calendar-days text-[10px]"></i> 달력
+            <button onclick="switchTab('calendar')" id="tab-cal-btn" class="px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5">
+                <i class="fa-regular fa-calendar-days text-xs"></i> 달력
             </button>
-            <button onclick="openSettings()" class="p-1.5 text-slate-500 hover:text-indigo-600 transition-colors shrink-0" title="설정">
-                <i class="fa-solid fa-gear text-xs"></i>
+            <button onclick="openSettings()" class="p-2 text-slate-600 hover:text-indigo-600 transition-colors shrink-0" title="설정">
+                <i class="fa-solid fa-gear text-base"></i>
             </button>
         </div>
     </header>
@@ -230,7 +231,7 @@
                     <button type="button" onclick="selectThemeOpt('default')" id="theme-btn-default" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-indigo-500 bg-indigo-50 text-indigo-700">기본 (블루)</button>
                     <button type="button" onclick="selectThemeOpt('dark')" id="theme-btn-dark" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-slate-700 bg-slate-900 text-white">다크</button>
                     <button type="button" onclick="selectThemeOpt('beige')" id="theme-btn-beige" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-amber-200 bg-amber-50 text-amber-900">베이지</button>
-                    <button type="button" onclick="selectThemeOpt('wood')" id="theme-btn-wood" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-stone-700 bg-stone-800 text-amber-100">우드톤</button>
+                    <button type="button" onclick="selectThemeOpt('pink')" id="theme-btn-pink" class="p-2.5 rounded-xl border text-xs font-semibold text-center border-rose-200 bg-pink-50 text-rose-900">연한 핑크</button>
                 </div>
             </div>
 
@@ -355,7 +356,7 @@
             document.getElementById('list-count').innerText = diaries.length;
         }
 
-        // Tab Switching
+        // Tab Switching JS
         function switchTab(tab) {
             const viewWrite = document.getElementById('view-write');
             const viewList = document.getElementById('view-list');
@@ -369,20 +370,23 @@
             viewList.classList.add('hidden');
             viewCal.classList.add('hidden');
 
-            btnWrite.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
-            btnList.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
-            btnCal.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all";
+            const inactiveClass = "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-all shrink-0 flex items-center gap-1.5";
+            const activeClass = "px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-indigo-600 text-white transition-all shadow-sm shrink-0 flex items-center gap-1.5";
+
+            btnWrite.className = inactiveClass;
+            btnList.className = inactiveClass;
+            btnCal.className = inactiveClass;
 
             if (tab === 'write') {
                 viewWrite.classList.remove('hidden');
-                btnWrite.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm";
+                btnWrite.className = activeClass;
             } else if (tab === 'list') {
                 viewList.classList.remove('hidden');
-                btnList.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm";
+                btnList.className = activeClass;
                 renderList();
             } else if (tab === 'calendar') {
                 viewCal.classList.remove('hidden');
-                btnCal.className = "px-2.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm";
+                btnCal.className = activeClass;
                 renderCalendar();
             }
         }
@@ -615,7 +619,7 @@
         }
 
         function updateModalUI() {
-            const themes = ['default', 'dark', 'beige', 'wood'];
+            const themes = ['default', 'dark', 'beige', 'pink'];
             themes.forEach(t => {
                 const btn = document.getElementById(`theme-btn-${t}`);
                 if (btn) {
