@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>나의 하루 다이어리</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Inter & Noto Sans KR) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        /* Mobile input optimization */
+        input, textarea, select {
+            font-size: 16px !important; /* Prevents auto-zoom on iOS */
+        }
+        /* Hide scrollbar for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-10 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex justify-between items-center max-w-lg mx-auto w-full">
+        <h1 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-book-bookmark text-indigo-600"></i>
+            <span>하루 기록</span>
+        </h1>
+        <div class="flex gap-2">
+            <button onclick="switchTab('write')" id="tab-write-btn" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm">
+                <i class="fa-solid fa-pen-to-square mr-1"></i> 작성
+            </button>
+            <button onclick="switchTab('list')" id="tab-list-btn" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all">
+                <i class="fa-solid fa-list-ul mr-1"></i> 목록 (<span id="diary-count">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-lg mx-auto w-full px-4 py-4 flex-1">
+
+        <!-- TAB 1: Write / Edit Form -->
+        <section id="view-write" class="space-y-4">
+            <form id="diary-form" onsubmit="handleSave(event)" class="space-y-4">
+                <input type="hidden" id="entry-id" value="">
+
+                <!-- 1. Date Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1" for="entry-date">
+                        <i class="fa-regular fa-calendar mr-1"></i> 날짜 <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="date" id="entry-date" required
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-slate-800 font-medium focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all">
+                </div>
+
+                <!-- 2. Mood Selection Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
+                        <i class="fa-regular fa-face-smile mr-1"></i> 오늘 기분 <span class="text-rose-500">*</span>
+                    </label>
+                    <!-- Mood quick picker -->
+                    <div class="grid grid-cols-5 gap-2 mb-2">
+                        <button type="button" onclick="selectMood('😊 좋음')" class="mood-btn p-2 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-center text-sm transition-all focus:outline-none">😊 좋음</button>
+                        <button type="button" onclick="selectMood('😄 신남')" class="mood-btn p-2 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-center text-sm transition-all focus:outline-none">😄 신남</button>
+                        <button type="button" onclick="selectMood('😌 평온')" class="mood-btn p-2 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-center text-sm transition-all focus:outline-none">😌 평온</button>
+                        <button type="button" onclick="selectMood('😴 피곤')" class="mood-btn p-2 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-center text-sm transition-all focus:outline-none">😴 피곤</button>
+                        <button type="button" onclick="selectMood('😢 슬픔')" class="mood-btn p-2 rounded-xl bg-white border border-slate-200 hover:border-indigo-400 text-center text-sm transition-all focus:outline-none">😢 슬픔</button>
+                    </div>
+                    <input type="text" id="entry-mood" placeholder="직접 입력 가능 (예: 💡 영감 가득)" required
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all">
+                </div>
+
+                <!-- 3. Highlight Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1" for="entry-highlight">
+                        <i class="fa-solid fa-star mr-1 text-amber-500"></i> 오늘의 하이라이트 (한 줄 요약) <span class="text-rose-500">*</span>
+                    </label>
+                    <input type="text" id="entry-highlight" placeholder="오늘 가장 기억에 남는 한 줄" required
+                        class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2.5 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all">
+                </div>
+
+                <!-- 4. Content Field -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1" for="entry-content">
+                        <i class="fa-solid fa-align-left mr-1"></i> 하루 이야기 (텍스트 전용) <span class="text-rose-500">*</span>
+                    </label>
+                    <textarea id="entry-content" rows="7" placeholder="오늘 있었던 일과 생각들을 솔직하게 적어보세요..." required
+                        class="w-full bg-white border border-slate-300 rounded-xl p-3 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none shadow-sm transition-all leading-relaxed"></textarea>
+                </div>
+
+                <!-- Action Buttons for Form -->
+                <div class="pt-2 flex gap-2">
+                    <button type="submit" class="flex-1 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span id="save-btn-text">일기 저장하기</span>
+                    </button>
+                    <button type="button" onclick="resetForm()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-4 rounded-xl transition-all">
+                        초기화
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- TAB 2: Diary List & View -->
+        <section id="view-list" class="space-y-4 hidden">
+            <!-- Search & Filter Controls -->
+            <div class="flex gap-2">
+                <div class="relative flex-1">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-input" oninput="renderList()" placeholder="기록 검색 (하이라이트, 내용, 기분)..."
+                        class="w-full pl-9 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
+                </div>
+                <button onclick="exportAllAsFile()" class="px-3 py-2 bg-slate-800 text-white text-xs font-semibold rounded-xl hover:bg-slate-900 transition-all flex items-center gap-1 shadow-sm shrink-0">
+                    <i class="fa-solid fa-file-arrow-down"></i> 전체 백업
+                </button>
+            </div>
+
+            <!-- List Container -->
+            <div id="diary-list" class="space-y-3">
+                <!-- Dynamic Content Will Be Rendered Here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 text-white text-sm font-medium px-4 py-2.5 rounded-full shadow-lg opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2 z-50">
+        <i class="fa-solid fa-circle-check text-emerald-400" id="toast-icon"></i>
+        <span id="toast-message">알림 메시지</span>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Storage Key
+        const STORAGE_KEY = 'my_daily_diaries_v1';
+
+        // Initial State
+        let diaries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+        // Set default date to Today
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
+            updateDiaryCount();
+        });
+
+        // Tab Switching Logic
+        function switchTab(tab) {
+            const writeView = document.getElementById('view-write');
+            const listView = document.getElementById('view-list');
+            const writeBtn = document.getElementById('tab-write-btn');
+            const listBtn = document.getElementById('tab-list-btn');
+
+            if (tab === 'write') {
+                writeView.classList.remove('hidden');
+                listView.classList.add('hidden');
+                writeBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm';
+                listBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all';
+            } else {
+                writeView.classList.add('hidden');
+                listView.classList.remove('hidden');
+                listBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 text-white transition-all shadow-sm';
+                writeBtn.className = 'px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all';
+                renderList();
+            }
+        }
+
+        // Mood Quick Selector
+        function selectMood(moodText) {
+            document.getElementById('entry-mood').value = moodText;
+        }
+
+        // Save / Update Diary
+        function handleSave(event) {
+            event.preventDefault();
+
+            const idInput = document.getElementById('entry-id').value;
+            const date = document.getElementById('entry-date').value;
+            const mood = document.getElementById('entry-mood').value.trim();
+            const highlight = document.getElementById('entry-highlight').value.trim();
+            const content = document.getElementById('entry-content').value.trim();
+
+            if (!date || !mood || !highlight || !content) {
+                showToast('모든 필수 항목을 입력해주세요.', 'error');
+                return;
+            }
+
+            if (idInput) {
+                // Update existing
+                const index = diaries.findIndex(item => item.id === idInput);
+                if (index !== -1) {
+                    diaries[index] = { id: idInput, date, mood, highlight, content, updatedAt: new Date().toISOString() };
+                    showToast('일기가 수정되었습니다!');
+                }
+            } else {
+                // Create new
+                const newEntry = {
+                    id: 'diary_' + Date.now(),
+                    date,
+                    mood,
+                    highlight,
+                    content,
+                    createdAt: new Date().toISOString()
+                };
+                diaries.unshift(newEntry); // Latest first
+                showToast('오늘의 일기가 저장되었습니다!');
+            }
+
+            // Save to LocalStorage
+            saveToStorage();
+            resetForm();
+            updateDiaryCount();
+        }
+
+        // Save to Storage helper
+        function saveToStorage() {
+            // Sort by date descending
+            diaries.sort((a, b) => new Date(b.date) - new Date(a.date));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(diaries));
+        }
+
+        // Reset Form to initial state
+        function resetForm() {
+            document.getElementById('diary-form').reset();
+            document.getElementById('entry-id').value = '';
+            document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
+            document.getElementById('save-btn-text').innerText = '일기 저장하기';
+        }
+
+        // Render Diary List
+        function renderList() {
+            const listContainer = document.getElementById('diary-list');
+            const query = document.getElementById('search-input').value.toLowerCase();
+
+            const filtered = diaries.filter(d => 
+                d.date.includes(query) ||
+                d.mood.toLowerCase().includes(query) ||
+                d.highlight.toLowerCase().includes(query) ||
+                d.content.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-2xl border border-dashed border-slate-300 p-6">
+                        <i class="fa-regular fa-folder-open text-4xl text-slate-300 mb-2"></i>
+                        <p class="text-slate-500 font-medium text-sm">작성된 일기가 없습니다.</p>
+                        <button onclick="switchTab('write')" class="mt-3 text-xs text-indigo-600 font-bold underline">첫 일기 작성하러 가기</button>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(item => `
+                <article class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm space-y-3 transition-all hover:shadow-md">
+                    <!-- Header Info -->
+                    <div class="flex justify-between items-start border-b border-slate-100 pb-2.5">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">
+                                📅 ${item.date}
+                            </span>
+                            <span class="text-xs font-medium text-slate-600 ml-2 bg-slate-100 px-2 py-0.5 rounded-md">
+                                ${escapeHtml(item.mood)}
+                            </span>
+                        </div>
+                        <!-- Action Dropdown/Buttons -->
+                        <div class="flex items-center gap-1">
+                            <button onclick="copySingleEntry('${item.id}')" title="클립보드 복사" class="p-1.5 text-slate-400 hover:text-indigo-600 transition-colors">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                            <button onclick="editEntry('${item.id}')" title="수정" class="p-1.5 text-slate-400 hover:text-amber-600 transition-colors">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteEntry('${item.id}')" title="삭제" class="p-1.5 text-slate-400 hover:text-rose-600 transition-colors">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Title -->
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base leading-snug">
+                            ⭐ ${escapeHtml(item.highlight)}
+                        </h3>
+                    </div>
+
+                    <!-- Content -->
+                    <p class="text-slate-600 text-sm whitespace-pre-wrap leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        ${escapeHtml(item.content)}
+                    </p>
+
+                    <!-- Quick Copy Button footer -->
+                    <div class="pt-1 flex justify-end">
+                        <button onclick="copySingleEntry('${item.id}')" class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold flex items-center gap-1">
+                            <i class="fa-regular fa-copy"></i> 텍스트 복사하기
+                        </button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // Copy single entry to Clipboard
+        function copySingleEntry(id) {
+            const entry = diaries.find(item => item.id === id);
+            if (!entry) return;
+
+            const formattedText = `📅 날짜: ${entry.date}\n🎭 기분: ${entry.mood}\n⭐ 하이라이트: ${entry.highlight}\n\n📝 내용:\n${entry.content}`;
+
+            copyToClipboard(formattedText, '일기 내용이 클립보드에 복사되었습니다!');
+        }
+
+        // Copy Helper function
+        function copyToClipboard(text, successMsg) {
+            const tempArea = document.createElement('textarea');
+            tempArea.value = text;
+            document.body.appendChild(tempArea);
+            tempArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg);
+            } catch (err) {
+                showToast('복사에 실패했습니다.', 'error');
+            }
+            document.body.removeChild(tempArea);
+        }
+
+        // Edit Entry
+        function editEntry(id) {
+            const entry = diaries.find(item => item.id === id);
+            if (!entry) return;
+
+            document.getElementById('entry-id').value = entry.id;
+            document.getElementById('entry-date').value = entry.date;
+            document.getElementById('entry-mood').value = entry.mood;
+            document.getElementById('entry-highlight').value = entry.highlight;
+            document.getElementById('entry-content').value = entry.content;
+
+            document.getElementById('save-btn-text').innerText = '일기 수정 완료';
+            switchTab('write');
+        }
+
+        // Delete Entry
+        function deleteEntry(id) {
+            if (confirm('정말로 이 일기를 삭제하시겠습니까?')) {
+                diaries = diaries.filter(item => item.id !== id);
+                saveToStorage();
+                updateDiaryCount();
+                renderList();
+                showToast('일기가 삭제되었습니다.');
+            }
+        }
+
+        // Export all diaries as Markdown / Text File
+        function exportAllAsFile() {
+            if (diaries.length === 0) {
+                showToast('내보낼 일기가 없습니다.', 'error');
+                return;
+            }
+
+            let fullText = `# 📖 나의 하루 기록 다이어리 백업\n\n`;
+            diaries.forEach((entry, idx) => {
+                fullText += `## ${entry.date} (${entry.mood})\n`;
+                fullText += `**하이라이트:** ${entry.highlight}\n\n`;
+                fullText += `${entry.content}\n\n`;
+                fullText += `---\n\n`;
+            });
+
+            const blob = new Blob([fullText], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Diary_Backup_${new Date().toISOString().split('T')[0]}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('전체 일기가 Markdown 파일로 다운로드되었습니다.');
+        }
+
+        // Update Counter
+        function updateDiaryCount() {
+            document.getElementById('diary-count').innerText = diaries.length;
+        }
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = message;
+            if (type === 'error') {
+                toastIcon.className = 'fa-solid fa-circle-exclamation text-rose-400';
+            } else {
+                toastIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+            }
+
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Helper: Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
